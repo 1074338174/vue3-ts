@@ -1,35 +1,42 @@
 <template>
-  <div class="common-layout">
-    <el-container>
-      <el-aside class="aside" width="200px">
-        <MenuList />
-      </el-aside>
-      <el-container>
-        <el-header class="header">
-          <MenuHeader />
-        </el-header>
-        <el-main class="main">
-          <RouterView />
-        </el-main>
-      </el-container>
+  <el-container class="app-wrapper">
+    <el-aside class="sidebar-container">
+      <MenuList />
+    </el-aside>
+    <el-container class="container">
+      <el-header>Header</el-header>
+      <el-main>
+        <RouterView />
+      </el-main>
     </el-container>
-  </div>
+  </el-container>
 </template>
 
 <script setup lang="ts">
-import MenuList from './menu/index.vue'
-import MenuHeader from './header/index.vue'
+import MenuList from './menu/index.vue';
+import MenuHeader from './header/index.vue';
 </script>
 
-<style scoped>
-.common-layout{
-  height: 100%;
+<style lang="scss" scoped>
+.app-container {
+  position: relative;
   width: 100%;
-}
-.el-container {
   height: 100%;
 }
-.aside{
+.container {
+  width: calc(100% - $sideBarWidth);
   height: 100%;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  transition: all 0.28s;
+  &.hidderContainer {
+    width: calc(100% - $hideSideBarWidth);
+  }
+}
+::v-deep .el-header {
+  padding: 0;
 }
 </style>

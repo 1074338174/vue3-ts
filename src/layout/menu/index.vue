@@ -1,35 +1,61 @@
 <template>
-  <el-radio-group v-model="isCollapse">
-    <el-radio-button :label="false">expand</el-radio-button>
-    <el-radio-button :label="true">collapse</el-radio-button>
-  </el-radio-group>
-  <el-menu
-    default-active="/home/sub"
+   <el-menu
     active-text-color="#ffd04b"
-    background-color="#545c64"
-    text-color="#fff"
+    background-color="#304156"
     class="el-menu-vertical-demo"
-    :collapse="isCollapse"
+    :default-active="defaultActive"
+    text-color="#fff"
+    :unique-opened="true"
     :router="true"
-    @open="handleOpen"
-    @close="handleClose"
-  >
-    <SideMenu :menuList="routes"/>
-  </el-menu>
+    >
+      <el-sub-menu 
+        :index="item.id"
+        v-for="(item, index) in menuList"
+        :key="item.id"
+      >
+        <template #title>
+          <el-icon>
+            <component :is="iconList[index]"></component>
+          </el-icon>
+          <span>{{ item.authName }}</span>
+        </template>
+        <el-menu-item 
+          :index="'/' + it.path"
+          v-for="it in item.children"
+          :key="it.id"
+          @click="savePath(it.path)"
+        >
+          <template #title>
+            <el-icon>
+              <component :is="icon"></component>
+            </el-icon>
+            <span>{{ it.authName }}</span>
+          </template>
+      </el-menu-item>
+    </el-sub-menu>
+    </el-menu>
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from 'vue';
-import SideMenu from './sideMenu.vue'
-import routes from '@/router/routes';
-const isCollapse = ref(false);
+import { getMenu } from '@/api/menu';
+import { ref } from 'vue';
 
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
+const iconList = ref(['user', 'setting', 'shop', 'tickets', 'pie-chart']);
+const icon = ref('menu');
+const defaultActive = ref(sessionStorage.getItem('path') || '/user');
+
+// 菜单
+let menuList:any = ref([]);
+const getMenuList = async () => {
+  menuList.value = await getMenu();
 }
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
+getMenuList();
+
+// 保存点击路径
+const savePath = (path: string):void => {
+  sessionStorage.setItem('path', `/${path}`);
 }
+
 </script>
 
 <style>

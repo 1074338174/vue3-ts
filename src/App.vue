@@ -3,7 +3,6 @@ import Layout from '@/layout/index.vue'
 </script>
 
 <template>
-  <!-- <Layout /> -->
   <RouterView />
 </template>
 

@@ -1,5 +1,6 @@
 import { login as loginApi } from '@/api/login'
 import router from '@/router';
+import { setTokenTime } from '@/utils/auth';
 
 
 export interface State {
@@ -21,16 +22,24 @@ export default {
     }
   },
   actions: {
+    // 登录
     login({ commit }: any, userInfo: userInfo) {
       return new Promise<void>((resolve, reject) => {
         loginApi(userInfo).then(res => {
           commit('setToken', res.token);
+          setTokenTime();
           router.replace('/');
           resolve();
         }).catch(err => {
           reject(err);
         })
       })
+    },
+    // 登出
+    logout({ commit }: any,) {
+      commit('setToken', '');
+      localStorage.clear();
+      router.replace('/login');
     }
   }
 }
