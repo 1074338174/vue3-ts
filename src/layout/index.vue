@@ -1,10 +1,12 @@
 <template>
   <el-container class="app-wrapper">
-    <el-aside class="sidebar-container">
+    <el-aside :width="asideWidth" class="sidebar-container">
       <MenuList />
     </el-aside>
-    <el-container class="container">
-      <el-header>Header</el-header>
+    <el-container class="container" :class="{ hidderContainer: !store.getters.slideType }">
+      <el-header>
+        <MenuHeader />
+      </el-header>
       <el-main>
         <RouterView />
       </el-main>
@@ -15,6 +17,14 @@
 <script setup lang="ts">
 import MenuList from './menu/index.vue';
 import MenuHeader from './header/index.vue';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+const asideWidth = computed(() => {
+  return store.getters.slideType ? '210px' : '67px';
+});
+
 </script>
 
 <style lang="scss" scoped>

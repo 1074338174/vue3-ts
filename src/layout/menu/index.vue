@@ -6,10 +6,11 @@
     :default-active="defaultActive"
     text-color="#fff"
     :unique-opened="true"
+    :collapse="!store.getters.slideType"
     :router="true"
     >
       <el-sub-menu 
-        :index="item.id"
+        :index="'/' + item.path"
         v-for="(item, index) in menuList"
         :key="item.id"
       >
@@ -29,7 +30,7 @@
             <el-icon>
               <component :is="icon"></component>
             </el-icon>
-            <span>{{ it.authName }}</span>
+            <span>{{ $t(`menus.${it.path }`) }}</span>
           </template>
       </el-menu-item>
     </el-sub-menu>
@@ -39,10 +40,12 @@
 <script lang="ts" setup>
 import { getMenu } from '@/api/menu';
 import { ref } from 'vue';
+import { useStore } from 'vuex';
 
 const iconList = ref(['user', 'setting', 'shop', 'tickets', 'pie-chart']);
 const icon = ref('menu');
 const defaultActive = ref(sessionStorage.getItem('path') || '/user');
+const store = useStore();
 
 // 菜单
 let menuList:any = ref([]);

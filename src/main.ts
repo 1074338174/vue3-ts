@@ -8,6 +8,7 @@ import App from './App.vue'
 import SvgIcon from '@/components/svgIcon/index.vue'
 import 'virtual:svg-icons-register'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import i18n from '@/i18n/index'
 
 
 const app = createApp(App);
@@ -18,4 +19,4 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 app.component("Svg-icon",SvgIcon)
 
-app.use(router).use(store).mount('#app')
+app.use(router).use(store).use(i18n).mount('#app')
