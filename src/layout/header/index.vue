@@ -37,7 +37,7 @@ import Driver from './components/driver/index.vue';
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    ::v-deep(.navbar-item) {
+    :deep(.navbar-item) {
       display: inline-block;
       margin-left: 18px;
       font-size: 22px;

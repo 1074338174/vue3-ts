@@ -11,6 +11,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
     "axios": "^1.1.2",
+    "dayjs": "^1.11.6",
     "driver.js": "^0.9.8",
     "element-plus": "^2.2.17",
     "sass": "^1.55.0",
